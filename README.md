@@ -1,6 +1,8 @@
-# Notify #
+# Irssi-Notify #
 
-Notifications for Irssi *via* a simple http server.
+Notifications for [Irssi](http://www.irssi.org/) *via* a simple http server.
+
+Requires [nodejs](http://nodejs.org/) for the server and the `notify-send` command (but it can easily be replaced).
 
 ## Dependencies ##
 
