@@ -4,16 +4,15 @@ Notifications for [Irssi](http://www.irssi.org/) *via* a simple http server.
 
 Requires [nodejs](http://nodejs.org/) for the server and the `notify-send` command (but it can easily be replaced).
 
-## Dependencies ##
-
-You will need nodejs to run the server.
-
 
 ## Usage ##
 
 1. Start the notify server : `./notify-server`
 2. Put notify.pl in `~/.irssi/`
 3. Type `/script load notify` in Irssi
+
+Note: If you can't run the server (`./notify-server : command not found`), try
+to make the file executable with `chmod +x notify-server`.
 
 If you use Irssi over ssh, you just have to forward port 9871 when you connect
 to ssh, like this :
