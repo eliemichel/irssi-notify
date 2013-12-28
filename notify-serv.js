@@ -1,3 +1,5 @@
+#!/usr/bin/env nodejs
+
 var express = require('express'),
     spawn = require('child_process').spawn;
 
