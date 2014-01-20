@@ -3,6 +3,7 @@ sub escape {
   $text =~ s/"/\\"/g;
   $text =~ s/\$/\\\$/g;
   $text =~ s/`/\\"/g;
+  $text =~ s/([^\w\-\.\@])/$1 eq " "?"+":sprintf("%%%2.2x",ord($1))/eg;
   return $text;
 }
 
