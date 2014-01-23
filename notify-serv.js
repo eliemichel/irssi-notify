@@ -6,7 +6,8 @@ var express = require('express'),
 express()
 .get('/notify', function (req, res) {
 	console.log('Request for ' + req.query.info);
-	spawn('notify-send', ['IRC', req.query.info]);
+	msg = req.query.info.replace("\\", "\\\\");
+	spawn('notify-send', ['IRC', msg]);
 	res.statusCode = 200;
 	res.end('');
 })
