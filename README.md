@@ -7,9 +7,10 @@ Requires [nodejs](http://nodejs.org/) for the server and the `notify-send` comma
 
 ## Usage ##
 
-1. Start the notify server : `./notify-server`
-2. Put notify.pl in `~/.irssi/`
-3. Type `/script load notify` in Irssi
+1. Install required node packages with `npm install`
+2. Start the notify server : `./notify-server`
+3. Put notify.pl in `~/.irssi/scripts`
+4. Type `/script load notify` in Irssi
 
 Note: If you can't run the server (`./notify-server : command not found`), try
 to make the file executable with `chmod +x notify-server`.

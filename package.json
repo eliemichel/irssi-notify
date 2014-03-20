@@ -1,0 +1,14 @@
+{
+	"name" : "irssi-notify",
+	"version" : "0.1.0",
+	"description" : "Lightweight server for irssi notifications over ssh handling",
+	"keywords" : ["irc", "irssi", "notification"],
+	"homepage" : "https://github.com/eliemichel/irssi-notify",
+	"bugs" : { "url" : "https://github.com/eliemichel/irssi-notify/issues" },
+	"license" : "MIT",
+	"author" : "Elie Michel <elie.michel.fr@gmail.com>",
+	"dependencies" : {
+		"express" : "3.x.x"
+	}
+	
+}

@@ -3,11 +3,23 @@
 var express = require('express'),
     spawn = require('child_process').spawn;
 
+
+function filter(msg) {
+	return (msg.match('- Nouveau message de pfcbot -') == null)
+}
+
+
+
 express()
 .get('/notify', function (req, res) {
 	console.log('Request for ' + req.query.info);
 	msg = req.query.info.replace("\\", "\\\\");
-	spawn('notify-send', ['IRC', msg]);
+	if (filter(msg)) {
+		spawn('notify-send', ['IRC', msg]);
+	}
+	else {
+		console.log('muted');
+	}
 	res.statusCode = 200;
 	res.end('');
 })
