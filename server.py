@@ -10,11 +10,12 @@ PORT = 9871
 NOTIF_COMMAND = 'notify-send'
 
 def notif_filter(q):
+	if 'info' not in q:
+		return False
 	conditions = [
-		'info' in q,
 		# This is an example of blacklisting
 		# (each message from pfcbot will be ignored)
-		'- Nouveau message de pfcbot -' not in q['info']
+		'- Nouveau message de pfcbot -' not in q['info'][0]
 	]
 	
 	return all(conditions)
