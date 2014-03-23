@@ -1,5 +1,7 @@
 #!/usr/bin/env nodejs
 
+var NOTIF_COMMAND = 'notify-send';
+
 var express = require('express'),
     spawn = require('child_process').spawn;
 
@@ -15,7 +17,7 @@ express()
 	console.log('Request for ' + req.query.info);
 	msg = req.query.info.replace("\\", "\\\\");
 	if (filter(msg)) {
-		spawn('notify-send', ['IRC', msg]);
+		spawn(NOTIF_COMMAND, ['IRC', msg]);
 	}
 	else {
 		console.log('muted');

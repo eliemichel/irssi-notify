@@ -5,12 +5,19 @@ from urllib.parse import urlparse, parse_qs
 from subprocess import call
 
 PORT = 9871
-
+# The notif command should expect 2 arguments. If it does not, you just
+# have to change a single line bellow. (see comments)
+NOTIF_COMMAND = 'notify-send'
 
 def notif_filter(q):
-	return \
-		'info' in q and \
+	conditions = [
+		'info' in q,
+		# This is an example of blacklisting
+		# (each message from pfcbot will be ignored)
 		'- Nouveau message de pfcbot -' not in q['info']
+	]
+	
+	return all(conditions)
 
 def notif_escape(msg):
 	return msg.replace('\\', '\\\\')
@@ -20,16 +27,17 @@ class Handler(BaseHTTPRequestHandler):
 	def do_GET(s):
 		req = urlparse(s.path)
 		q = parse_qs(req.query)
-		print(req.path)
+		
 		if req.path == '/notify':
 			if notif_filter(q):
-				call(['notify-send', 'IRC', notif_escape(q['info'][0])])
+				# If your notify command expect more or less than 2
+				# arguments, please edit the next line.
+				call([NOTIF_COMMAND, 'IRC', notif_escape(q['info'][0])])
 			else:
 				print("Muted request")
+		
 		s.send_response(200)
-		s.send_header("Content-type", "text/plain")
 		s.end_headers()
-		print()
 
 
 def main():
