@@ -1,4 +1,4 @@
-#!/usr/bin/env nodejs
+#!/usr/bin/env node
 
 var NOTIF_COMMAND = 'notify-send';
 
@@ -13,14 +13,17 @@ function filter(msg) {
 
 
 express()
-.get('/notify', function (req, res) {
-	console.log('Request for ' + req.query.info);
-	msg = req.query.info.replace("\\", "\\\\");
+.use(express.bodyParser())
+.post('/notify', function (req, res) {
+	console.log('Request for ' + req.body.nick + ', ' + req.body.msg + ', ' + req.body.chan);
+	msg = req.body.msg.replace("\\", "\\\\");
+	chan = req.body.chan.replace("\\", "\\\\");
+	nick = req.body.nick.replace("\\", "\\\\");
 	if (filter(msg)) {
-		spawn(NOTIF_COMMAND, ['IRC', msg]);
+		spawn(NOTIF_COMMAND, ['IRC - ' + (chan != '' ? nick + ' sur ' + chan : 'Message privé de ' + nick), msg]);
 	}
 	else {
-		console.log('muted');
+		console.log('[muted]');
 	}
 	res.statusCode = 200;
 	res.end('');

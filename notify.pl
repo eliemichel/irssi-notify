@@ -1,24 +1,36 @@
-sub escape {
-  my ($text) = @_;
-  $text =~ s/"/\\"/g;
-  $text =~ s/\$/\\\$/g;
-  $text =~ s/`/\\"/g;
-  $text =~ s/([^\w\-\.\@])/$1 eq " "?"+":sprintf("%%%2.2x",ord($1))/eg;
-  return $text;
-}
+use LWP::UserAgent;
+use HTTP::Request::Common;
+
+my $ua = LWP::UserAgent->new;
+
+my $port = 9871;
+my $endpoint = "http://localhost:$port/notify";
+
 
 sub notify_private {
   my ($server, $msg, $nick, $addr) = @_;
-  $msg = escape($msg);
-  $nick = escape($nick);
-  system("wget -qO- \"localhost:9871/notify?info= - Nouveau message privé de $nick - \n$msg\" &> /dev/null");
+
+  $ua->request(
+	  POST $endpoint,
+	  Content => [
+		nick => $nick,
+		msg => $msg,
+		chan => "",
+	  ],
+  );
 }
 
 sub notify_public {
   my ($server, $msg, $nick, $addr, $target) = @_;
-  $msg = escape($msg);
-  $nick = escape($nick);
-  system("wget -qO- \"localhost:9871/notify?info= - Nouveau message de $nick - \n$msg\" &> /dev/null");
+
+  $ua->request(
+	  POST $endpoint,
+	  Content => [
+		nick => $nick,
+		msg => $msg,
+		chan => $target,
+	  ],
+  );
 }
 
 Irssi::signal_add("message private", "notify_private");
