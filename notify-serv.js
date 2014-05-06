@@ -7,7 +7,10 @@ var express = require('express'),
 
 
 function filter(msg) {
-	return (msg.match('- Nouveau message de pfcbot -') == null)
+	return (
+		nick != 'pfcbot' &&
+		nick != 'Eve'
+	)
 }
 
 
@@ -19,7 +22,7 @@ express()
 	msg = req.body.msg.replace("\\", "\\\\");
 	chan = req.body.chan.replace("\\", "\\\\");
 	nick = req.body.nick.replace("\\", "\\\\");
-	if (filter(msg)) {
+	if (filter(nick)) {
 		spawn(NOTIF_COMMAND, ['IRC - ' + (chan != '' ? nick + ' sur ' + chan : 'Message privé de ' + nick), msg]);
 	}
 	else {
