@@ -1,6 +1,4 @@
-use URI::Encode;
-
-my $uri = URI::Encode->new( { encode_reserved => 0 } );
+use URI::Escape;
 
 my $port = 9871;
 my $endpoint = "http://localhost:$port/notify";
@@ -14,7 +12,7 @@ sub send_request {
     if ($post_data ne "") {
       $post_data .= "&";
     }
-    $post_data .= $key . "=" . $uri->encode($val);
+    $post_data .= $key . "=" . uri_escape($val);
   }
 
   system(
