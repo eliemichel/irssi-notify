@@ -20,6 +20,7 @@ sub send_request {
       "--post-data=" . $post_data,
       "-o", "/dev/null",
       "-O", "/dev/null",
+	  "-T", "5",
       $endpoint
     );
 }
